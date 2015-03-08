@@ -12,4 +12,5 @@
 ;; should
 (for ([i (in-range 50)]) (newline))
 
+;; 开始新游戏，直接以系统 logname 作为角色名字
 (when (not debug) (new-game (getenv "LOGNAME")))

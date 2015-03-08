@@ -8,6 +8,7 @@
          "utilities.rkt")
 (provide (all-defined-out))
 
+;; 游戏中获取按键绑定说明
 (define (describe-command)
   (displayln "Type the keybinding you want me to describe.")
   (echo-on)
@@ -17,6 +18,7 @@
     (displayln (if (pair? cmd) (caddr cmd) cmd)))
   (echo-off))
 
+;; 操作命令说明
 (define (describe-commands)
   (displayln "Arrow keys: Movement")
   (displayln "Space bar:  Wait")
@@ -43,6 +45,7 @@
                           (print-paragraph para line-no)))))))))
   (wait-after-long-output))
 
+;; 查询字符对应的描述
 (define (describe-one what)
   (let ([type+desc (dict-ref descriptions-table what
                              "I don't know what that is.")])
@@ -51,6 +54,7 @@
         type+desc)))
 
 ;; reads a character, and prints out the description
+;; 即为游戏中的 "/" 命令，查询字符说明，例如输入 "r" 会得到 "A rat"
 (define (describe)
   (displayln "Type the character you want me to describe.")
   (echo-on)
@@ -59,6 +63,7 @@
     (displayln (describe-one what)))
   (echo-off))
 
+;; 列出游戏中所有字符意思
 (define (describe-all)
   (let ([grouped (group-by-identical
                   descriptions-table string<?
@@ -85,10 +90,10 @@
   (wait-after-long-output))
 
 (define (info)
-  (let* ([grid (player-map player)]
-         [pos  (character-pos player)]
-         [cell (grid-ref grid pos)]
-         [occ  (cell-occupant cell)])
+  (let* ([grid (player-map player)] ;; 地图
+         [pos  (character-pos player)] ;; 角色坐标
+         [cell (grid-ref grid pos)] ;; 坐标对应格子
+         [occ  (cell-occupant cell)]) ;; 格子上的物品信息
     ;; temporarily remove occupant, so see beyond the player itself
     (set-cell-occupant! cell #f)
     (displayln (describe-one (show cell)))

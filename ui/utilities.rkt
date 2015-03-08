@@ -7,12 +7,15 @@
          "display.rkt")
 (provide (all-defined-out))
 
+;; 命令列表
 (define command-table '())
+;; 新增命令
 (define (new-command char thunk category desc)
   (set! command-table (cons (list char thunk category desc) command-table)))
+;; 反转命令列表
 (define (reverse-command-table)
   (set! command-table (reverse command-table)))
-
+;; 无效命令
 (define (invalid-command) (display "Invalid command.\n"))
 
 ;; print a large block of text
@@ -35,6 +38,8 @@
   (read-char)
   (for ([i (in-range 30)]) (newline)))
 
+;; 四向移动操作
+;; 键盘事件都会被格式化为 "\u001b[~a" 模式
 (define (choose-direction)
   (if (= (char->integer (read-char)) 27) ; escape
       (case (which-direction?)
@@ -45,6 +50,7 @@
       (begin (invalid-command)
              #f)))
 
+;; 只支持上下左右移动
 (define (which-direction?)
   (define char (read-char))
   (when (not (or (eq? char #\[)
