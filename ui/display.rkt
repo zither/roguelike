@@ -12,16 +12,21 @@
   (show-grid (player-map player)
 	     #:print-fun (visibility-show (player-view player)
                                           (player-map  player))))
-
 (define (print-floor-banner)
   (cursor-home)
   (clear-line)
   (printf "Floor ~a\n" (player-character-floor-no player)))
 
+;; 打印侧边栏，即游戏中的状态栏
 (define (print-sidebar)
+  ;; 将光标移动到第 2 行
   (cursor-notification-head)
+  ;; 从第 60 列开始打印
+  ;; 角色名称
   (printf-notification "~a\n" (character-name player))
+  ;; 等级
   (printf-notification "level ~a\n" (character-level player))
+  ;; 经验
   (printf-notification "~a xp pts\n" (player-character-experience player))
   (printf-notification "") ; for alignment
 
@@ -32,6 +37,7 @@
   (when (altered-attr? player 'natural-ac)
     (terminal-colors 'white 'black))
   (display (get-armor-class player))
+  ;; 清除格式
   (terminal-reset)
   (newline))
 

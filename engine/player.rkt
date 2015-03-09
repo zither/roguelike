@@ -24,9 +24,13 @@
 (define (new-player name)
   (set-player!
    (make-player-character
+    ;; 名字 坐标 floor
     name #f #f
+    ;; 力量 敏捷 体质 智力 感知 魅力 动态属性 防御 
     16 14 14 10 10 10 (make-hash) 0
+    ;; 等级 hit-dice
     1 '(10) ; hit dice
+    ;; 最大血量 血量
     #f #f
     1 #f 1  ; base and current attack bonus, nb attacks
     6       ; speed, 6 seconds for a turn

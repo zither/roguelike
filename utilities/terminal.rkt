@@ -49,8 +49,9 @@
 
 (define (cursor-notification-head) (set-cursor-position! 2))
 
+;; 打印游戏中的状态栏
 (define (printf-notification f . s)
-  ;; 后退 60 行
+  ;; 从第 60 列开始
   (terminal-command (format "[60C")) ; 60th column
   ;; 清除至行尾
   (clear-line)

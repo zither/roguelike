@@ -7,15 +7,21 @@
          "scheduler.rkt")
 (provide (all-defined-out))
 
+;; character struct
 (define-class <character> ()
+  ;; 名字
   name
+  ;; 坐标 层
   pos floor
+  ;; 力量 敏捷 体质 智力 感知 魅力
   str dex con int wis cha
   ;; table that contains, for each attribute, how many temporary effects are
   ;; affecting it. if this non-zero, the attribute will be displayed
   ;; differently
   altered-attrs
+  ;; 防御
   natural-ac
+  ;; 等级
   level
   hit-dice max-hp hp
   base-attack-bonus
@@ -25,6 +31,7 @@
   equipment)
 
 (define (init-hp c (max? #f))
+  ;; character-hit-dice 即为 character 结构的 hit dice 
   (let* ((hd (character-hit-dice c))
 	 (hp (max (+ (if max?
 			 (apply + hd)
@@ -71,13 +78,20 @@
                10)
             2))
 
+;; 属性
 (define (show-attr attr) ; bleh
   (case attr
+    ;; 力量
     [(str) "strength"]
+    ;; 敏捷
     [(dex) "dexterity"]
+    ;; 体质
     [(con) "constitution"]
+    ;; 智力
     [(int) "intelligence"]
+    ;; 感知
     [(wis) "wisdom"]
+    ;; 魅力
     [(cha) "charisma"]))
 
 ;; to note that an attribute is altered by a temporary effect
@@ -103,10 +117,11 @@
   (+ (character-current-attack-bonus c)
      (get-attribute-bonus 'dex c)))
 
+;; 角色装备
 (define-struct equipment
-  (main-hand
+  (main-hand ; 主武器
    off-hand ; shield or 2nd weapon
-   torso)
+   torso) ; 躯干装备，盔甲
   #:mutable #:transparent)
 (define (new-equipment #:main-hand (main-hand #f)
                        #:off-hand (off-hand #f)
@@ -160,7 +175,7 @@
              #f)
             (else #f)))))
 
-
+;; 回复血量，不能超过角色最大血量
 (define (heal c amount)
   (set-character-hp! c (min (+ (character-hp c) amount)
                             (character-max-hp c))))

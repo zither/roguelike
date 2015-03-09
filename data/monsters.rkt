@@ -7,6 +7,7 @@
 
 (provide (all-defined-out))
 
+;; 哥布林
 (define-monster goblin (monster) #\g "A goblin."
   (11 13 12 10 9 6) 1/3 (6)
   #:base-attack-bonus 1
@@ -15,6 +16,8 @@
                #:off-hand  (new-light-shield)
                #:torso     (new-leather-armor))
   (rush-behavior))
+
+;; 哥布林弓箭手
 (define-monster goblin-archer (goblin)
   (new-sprite #\g #:fg 'magenta) "A goblin archer."
   (11 13 12 10 9 6) 1/2 (4)
@@ -23,6 +26,7 @@
                #:main-hand (new-shortbow))
   (ranged-behavior))
 
+;; 狗头人
 (define-monster kobold (monster) #\k "A kobold."
   (9 13 10 10 9 8) 1/4 (4)
   #:base-attack-bonus 1
@@ -31,6 +35,7 @@
                #:torso     (new-leather-armor))
   (rush-behavior))
 
+;; 半兽人
 (define-monster orc (monster) #\o "An orc."
   (17 11 12 8 7 6) 1/2 (8)
   #:base-attack-bonus 1
@@ -40,18 +45,19 @@
   (pursue-behavior))
 
 
+;; 动物系
 (define-class <animal> (monster))
-
+;; 蝙蝠
 (define-monster bat (animal) #\b "A bat."
   (1 15 10 2 14 4) 1/10 (2)
   ;; will attack with unarmed strike (1d4 + str)
   (flee-behavior))
-
+;; 老鼠
 (define-monster rat (animal) #\r "A rat."
   (2 15 10 2 12 2) 1/8 (2)
   ;; also unarmed strike
   (rush-behavior))
-
+;; 狼
 (define-monster wolf (animal) #\w "A wolf."
   (13 15 15 2 12 6) 1 (8 8)
   #:base-attack-bonus 1
@@ -59,5 +65,5 @@
                #:main-hand (new-natural-weapon '(6) 'piercing)) ; bite
   (pursue-behavior))
 
-
+;; 不死系
 (define-class <undead> (monster))
